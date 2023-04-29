@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
+@app.route('/')
+def hello():
+    return ''
 
 @app.route('/<problem>')
 def getProblem(problem):
@@ -19,9 +22,18 @@ def getProblem(problem):
         name = 'ERROR'
         code = 404
 
-    return jsonify({
-        'problemNumber': problem,
-        'url': url,
-        'title': name,
-        'statusCode': code
-    }), code
+    if code != 404:
+        return jsonify({
+            'problemNumber': problem,
+            'url': url,
+            'title': name,
+            'statusCode': code
+        }), code
+    else:
+        return jsonify({
+            'problemNumber': problem,
+            'title': name,
+            'statusCode': code
+        }), code
+
+app.run()
